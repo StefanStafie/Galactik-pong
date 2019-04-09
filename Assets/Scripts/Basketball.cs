@@ -20,7 +20,7 @@ public class Basketball : MonoBehaviour
 
     void Start()
     {
-        Speed = 1.5F;
+        Speed = 1F;
         EndGame = true;
         rb = GetComponent<Rigidbody>();
         Count = GameObject.Find("CountDown");
@@ -37,11 +37,13 @@ public class Basketball : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (Speed > 4)
+            Speed = 4;
         
         if (GameHasStarted)
         {
             // initial startGame
-            Speed = Mathf.Min(Speed, 3);
+            Speed = Mathf.Min(Speed, 6);
             if (!Moving)
             {
                 Angle = 0.2f;
@@ -53,7 +55,7 @@ public class Basketball : MonoBehaviour
             //daca ajunge pe margini, isi schimba directia
             if (transform.position.x > WIDTH || transform.position.x < -WIDTH)
             {
-                Speed += 0.1f;
+                Speed += 0.2f;
                 if (transform.position.x > WIDTH && LeftRight * Angle > 0)
                     LeftRight *= (-1);
                 if (transform.position.x < WIDTH && LeftRight * Angle < 0)
@@ -69,7 +71,7 @@ public class Basketball : MonoBehaviour
                 BallOnBar *= -LeftRight;
                 if (BallOnBar< 0.5 && BallOnBar > -0.5)
                 {//e bun si ricoseaza
-                    Speed+= 0.1f;
+                    Speed+= 0.2f;
                     Angle = BallOnBar * 7 / 5;
                     Direction = Direction * (-1);
                     if (BallOnBar < 0.1 && BallOnBar > -0.1)
@@ -96,7 +98,7 @@ public class Basketball : MonoBehaviour
                 BallOnBar *= -LeftRight;
                 if (BallOnBar < 0.5 && BallOnBar > -0.5)
                 {//e bun si ricoseaza
-                    Speed += 0.1f;
+                    Speed += 0.2f;
                     Angle = BallOnBar * 7 / 5;
                     Direction = Direction * (-1);
                     if (BallOnBar < 0.1 && BallOnBar > -0.1)
